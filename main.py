@@ -8,6 +8,13 @@ def cipher(key, text):
         for j in range(size):
             code +=block[key.index(j)]
     return code
+def simv(key,text):
+    size=len(key)
+    n=len(text)
+    if n%size !=0:
+        for i in range (size-(n%size)):
+            text+=str(cipher(key,text))
+        print(cipher(key,text))
 
 print("Привет")
 print("Я умею шифровать сообщения")
