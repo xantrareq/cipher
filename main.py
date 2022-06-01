@@ -1,24 +1,24 @@
 def cipher(key, txt):
-    size=len(key)
-    n=len(key)
+    size = len(key)
+    z = len(key)
     zed = ' '
     cyp = ' '
-    for i in range(0,n,size):
+    for i in range(0, z, size):
         zed=[txt[i+j] for j in range(size)]
         for j in range(size):
             cyp += zed[key.index(j)]
     return cyp
-#FFFFFFFf
+
 def symbol(key, txt):
-    size=len(key)
-    n=len(txt)
-    if n % size != 0:
-        for i in range(size-(n%size)):
+    size = len(key)
+    z = len(txt)
+    if z % size != 0:
+        for i in range(size-(z % size)):
             txt += str("/0")
     print(cipher(key, txt))
 def groups(key, txt):
     size = len(key)
-    kolvo = int(input("По сколько символов нужно группировать? "))
+    kolvo = int(input("Сколько символов сгруппировать? "))
     text = [txt[i:i + kolvo] for i in range(0, len(txt), kolvo)]
     if len(text[-1]) != kolvo:
         for i in range(kolvo - (len(text[-1]) % kolvo)):
@@ -33,17 +33,73 @@ def word(key, txt):
     if len(text) != size:
         for i in range(size - (len(text) % size)):
             text.append("/0" * 5)
-    k = len(text)
-    block = ''
+    z = len(text)
+    zed = ''
     cyp = ''
-    for i in range(0, k, size):
-        block = [text[i + j] for j in range(size)]
+    for i in range(0, z, size):
+        zed = [text[i + j] for j in range(size)]
         for j in range(size):
-            cyp += block[key.index(j)]
+            cyp += zed[key.index(j)]
             cyp += " "
     print(cyp)
 
 def choice():
+    txt = input("Введите сообщение: ")
+    print("Введите ключ шифрования, вводя цифры через пробел")
+    print("Например, 3 1 0 2")
+    a = input("Введите ключ\t")
+    ak = a.split()
+    key = []
+    for i in ak:
+        key.append(int(i))
+    print("Выберите тип шифрования: ")
+    print("1 - посимвольное")
+    print("2 - группы")
+    print("3 - слов ")
+    kek = int(input())
+    if kek == 1:
+        symbol(key, txt)
+    if kek == 2:
+        groups(key, txt)
+    if kek == 3:
+        word(key, txt)
+    else:
+        print("Вы ввели неверную букву, попробуйте снова")
+        choice()
+def decip(key, txt):
+    size = len(key)
+    z = len(txt)
+    zed = ''
+    cyp = ''
+    for i in range(0, z, size):
+        zed = [txt[i + j] for j in range(size)]
+        for j in range(size):
+            cyp += zed[key.index(j)]
+    cyp = cyp.replace("/0", "")
+    return cyp
+def desymbol(key, txt):
+    print(decip(key, txt))
+
+def degroups(key, txt):
+    kolvo = int(input("Сколько символов сгруппировать? "))
+    text = [txt[i:i + kolvo] for i in range(0, len(txt), kolvo)]
+    print(decip(key, text))
+
+def deword(key, txt):
+    text = txt.split()
+    size = len(key)
+    n = len(text)
+    zed = ''
+    cipher = ''
+    for i in range(0, n, size):
+        zed = [text[i + j] for j in range(size)]
+        for j in range(size):
+            cipher += zed[key[j]]
+            cipher += " "
+    cipher = cipher.replace("/0", "")
+    print(cipher)
+
+def dechoice():
     txt = input("Введите сообщение: ")
     print("Введите ключ шифрования, вводя цифры через пробел")
     print("Например, 3 1 0 2")
@@ -58,26 +114,15 @@ def choice():
     print("3 - слов ")
     kek = int(input())
     if kek == 1:
-        symbol(key, txt)
+        desymbol(key, txt)
     if kek == 2:
-        groups(key, txt)
+        degroups(key, txt)
     if kek == 3:
-        word(key, txt)
-def decip(key, txt):
-    size = len(key)
-    n = len(txt)
-    block = ''
-    cyp = ''
-    for i in range(0, n, size):
-        block = [txt[i + j] for j in range(size)]
-        for j in range(size):
-            cyp += block[key.index(j)]
-    cyp = cyp.replace("/0", "")
-    return cyp
-def desymbol(key, txt):
-    for i in range(len(key) // 2):
-        key[i], key[-i - 1] = key[-i - 1], key[i]
-    print(decip(key, txt))
+        deword(key, txt)
+    else:
+        print("Вы ввели неверную цифру, попробуйте еще ращ")
+        dechoice()
+
 def beggin():
     print("Привет")
     print("Я умею шифровать сообщения")
@@ -87,8 +132,12 @@ def beggin():
     vib = int(input("Ваш выбор: "))
     if vib == 1:
         choice()
+    if vib == 2:
+        dechoice()
     else:
-        print("Ладно")
+        print("Вы выбрали несуществующий вариант! Попробуйте снова")
+        beggin()
+
 
 while(True):
     beggin()
