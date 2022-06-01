@@ -17,17 +17,31 @@ def symbol(key, txt):
             txt += str("/0")
     print(cipher(key, txt))
 def groups(key, txt):
-    blocksize = len(key)
+    ksize = len(key)
     poskolko = int(input("По сколько символов нужно группировать? "))
     text = [txt[i:i + poskolko] for i in range(0, len(txt), poskolko)]
     if len(text[-1]) != poskolko:
         for i in range(poskolko - (len(text[-1]) % poskolko)):
             text[-1] += str("/0")
-    if len(text) != blocksize:
-        for i in range(blocksize - (len(text) % blocksize)):
+    if len(text) != size:
+        for i in range(size - (len(text) % size)):
             text.append("/0" * poskolko)
     print(cipher(key, text))
-
+def word(key, txt):
+    size = len(key)
+    text = txt.split(" ")
+    if len(text) != size:
+        for i in range(size - (len(text) % size)):
+            text.append("☭" * 5)
+    n = len(text)
+    block = ''
+    code = ''
+    for i in range(0, n, size):
+        block = [text[i + j] for j in range(size)]
+        for j in range(size):
+            code += block[key.index(j)]
+            code += " "
+    print(code)
 def choice():
     txt = input("Введите сообщение: ")
     print("Введите ключ шифрования, вводя цифры через пробел")
