@@ -8,7 +8,7 @@ def cipher(key, txt):
         for j in range(size):
             cyp += zed[key.index(j)]
     return cyp
-
+#FFFFFFFf
 def symbol(key, txt):
     size=len(key)
     n=len(txt)
