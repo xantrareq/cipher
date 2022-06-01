@@ -32,7 +32,7 @@ def choice():
     txt = input("Введите сообщение: ")
     print("Введите ключ шифрования, вводя цифры через пробел")
     print("Например, 3 1 0 2")
-    k = input("Введите ключ")
+    k = input("Введите ключ\t")
     ke = k.split()
     key = []
     for e in ke:
@@ -40,7 +40,7 @@ def choice():
     print("Выберите тип шифрования: ")
     print("1 - посимвольное")
     print("2 - группы")
-    print("3 - слов \n")
+    print("3 - слов ")
     kek = int(input())
     if kek == 1:
         symbol(key, txt)
