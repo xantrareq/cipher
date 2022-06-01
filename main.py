@@ -17,7 +17,7 @@ def symbol(key, txt):
             txt += str("/0")
     print(cipher(key, txt))
 def groups(key, txt):
-    ksize = len(key)
+    size = len(key)
     poskolko = int(input("По сколько символов нужно группировать? "))
     text = [txt[i:i + poskolko] for i in range(0, len(txt), poskolko)]
     if len(text[-1]) != poskolko:
@@ -33,10 +33,10 @@ def word(key, txt):
     if len(text) != size:
         for i in range(size - (len(text) % size)):
             text.append("☭" * 5)
-    n = len(text)
+    k = len(text)
     block = ''
     code = ''
-    for i in range(0, n, size):
+    for i in range(0, k, size):
         block = [text[i + j] for j in range(size)]
         for j in range(size):
             code += block[key.index(j)]
